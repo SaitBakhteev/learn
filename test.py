@@ -85,3 +85,32 @@ t_33.join()
 # one_thr(9)
 
 print(f'затарченное время: {time.time() - start}')
+
+# Тест состояния гонок
+import time
+import threading
+
+x=0
+
+def increment(n):
+    global x
+    time.sleep(n/(n+100))
+    for i in range(100):
+        t = x
+        time.sleep(n/1000000)
+        x = t + 1
+
+thread_list = []
+for i in range(10):
+    thread_list.append(threading.Thread(target=increment, args=(i,)))
+
+for t in thread_list:
+    t.start()
+
+for t in thread_list:
+    t.join()
+
+print(x)
+
+
+
